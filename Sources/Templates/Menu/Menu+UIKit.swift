@@ -33,7 +33,7 @@ public extension Templates {
         // MARK: - UIKit properties
 
         var popover: Popover?
-        var longPressGestureRecognizer: UILongPressGestureRecognizer!
+        var longPressGestureRecognizer: UILongPressGestureRecognizer?
         var cancellables = Set<AnyCancellable>()
 
         /**
@@ -60,8 +60,9 @@ public extension Templates {
         func addGestureRecognizer() {
             let longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(dragged))
             longPressGestureRecognizer.minimumPressDuration = 0
-            sourceView.addGestureRecognizer(longPressGestureRecognizer)
+//            sourceView.addGestureRecognizer(longPressGestureRecognizer)
             sourceView.isUserInteractionEnabled = true
+            self.longPressGestureRecognizer = longPressGestureRecognizer
         }
 
         @objc func dragged(_ gestureRecognizer: UILongPressGestureRecognizer) {
@@ -154,8 +155,12 @@ public extension Templates {
              Don't call `updatePresent`, since the popover has already been automatically dismissed.
              */
             popover.context.onAutoDismiss = { [weak self] in
-                self?.model.present = false
-                self?.fadeLabel?(false)
+                guard let self else { return }
+                self.model.present = false
+                self.fadeLabel?(false)
+                if let g = self.longPressGestureRecognizer, let view = g.view {
+                    view.removeGestureRecognizer(g)
+                }
             }
 
             self.popover = popover

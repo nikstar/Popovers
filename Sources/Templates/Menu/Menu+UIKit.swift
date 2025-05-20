@@ -146,6 +146,8 @@ public extension Templates {
             }
             popover.attributes.sourceFrameInset = configuration.sourceFrameInset
             popover.attributes.screenEdgePadding = configuration.screenEdgePadding
+            popover.attributes.dismissal.mode = .tapOutside
+            popover.attributes.blocksBackgroundTouches = true
 
             /**
              Make sure to set `model.present` back to false when the menu is dismissed.

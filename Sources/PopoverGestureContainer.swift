@@ -109,6 +109,8 @@ class PopoverGestureContainer: UIView {
 
                     return nil
                 } else {
+                    dismissPopoverIfNecessary(popoverFrames: popoverFrames, point: point, popoverToDismiss: popover)
+                    
                     /// Receive the touch and block it from going through.
                     return super.hitTest(point, with: event)
                 }
@@ -145,7 +147,9 @@ class PopoverGestureContainer: UIView {
             popoverToDismiss.attributes.dismissal.tapOutsideIncludesOtherPopovers || /// The popover can be dismissed even if the touch hit another popover, **or...**
             !popoverFrames.contains(where: { $0.contains(point) }) /// ... no other popover frame contains the point (the touch landed outside)
         {
-            popoverToDismiss.dismiss()
+            DispatchQueue.main.async {
+                popoverToDismiss.dismiss()
+            }
         }
     }
 

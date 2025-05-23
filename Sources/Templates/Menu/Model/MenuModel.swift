@@ -11,7 +11,7 @@ import SwiftUI
 
 extension Templates {
     typealias MenuItemID = UUID
-    class MenuModel: ObservableObject {
+    public class MenuModel: ObservableObject {
         var buildConfiguration: ((inout MenuConfiguration) -> Void) = { _ in }
 
         var configuration: MenuConfiguration {
@@ -41,7 +41,7 @@ extension Templates {
         /// The frame of the menu in global coordinates.
         @Published var menuFrame = CGRect.zero
 
-        init(buildConfiguration: @escaping ((inout MenuConfiguration) -> Void) = { _ in }) {
+        public init(buildConfiguration: @escaping ((inout MenuConfiguration) -> Void) = { _ in }) {
             self.buildConfiguration = buildConfiguration
         }
 

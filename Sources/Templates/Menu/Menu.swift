@@ -25,7 +25,7 @@ public extension Templates {
         public var popoverAnchor = Popover.Attributes.Position.Anchor.top /// The menu's anchor.
         public var scaleAnchor: Popover.Attributes.Position.Anchor? /// If nil, the anchor will be automatically picked.
         public var excludedFrames: (() -> [CGRect]) = { [] }
-        public var menuBlur = UIBlurEffect.Style.prominent
+        public var menuBlur = UIBlurEffect.Style.systemMaterial
         public var width: CGFloat? = CGFloat(240) /// If nil, hug the content.
         public var cornerRadius = CGFloat(14)
         public var shadow = Shadow.system
@@ -87,7 +87,7 @@ public extension Templates {
     }
 
     /// The popover that gets presented.
-    internal struct MenuView<Content: View>: View {
+    public struct MenuView<Content: View>: View {
         @ObservedObject var model: MenuModel
 
         /// The menu buttons.
@@ -96,7 +96,7 @@ public extension Templates {
         /// For the scale animation.
         @State var expanded = false
 
-        init(
+        public init(
             model: MenuModel,
             @ViewBuilder content: () -> Content
         ) {
@@ -104,7 +104,7 @@ public extension Templates {
             self.content = content()
         }
 
-        var body: some View {
+        public var body: some View {
             /// Reference this here instead of repeating `model.configuration` over and over again.
             let configuration = model.configuration
 
